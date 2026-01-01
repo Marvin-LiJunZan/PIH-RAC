@@ -1,169 +1,195 @@
 # PIH-RAC: Peak Identification for Recycled Aggregate Concrete
 
-## 📖 项目简介
+## 📖 Project Overview
 
-本项目专注于再生骨料混凝土（RAC）的峰值识别和本构关系研究，通过多种机器学习方法预测峰值应力和峰值应变，为再生混凝土的力学性能分析提供支持。
+This project focuses on peak identification and constitutive relationship research for Recycled Aggregate Concrete (RAC). It predicts peak stress and peak strain using various machine learning methods, providing support for mechanical property analysis of recycled concrete.
 
-## 🎯 主要功能
+## 🎯 Main Features
 
-- **峰值应力预测** - 使用XGBoost、LightGBM、CatBoost、RandomForest等算法
-- **峰值应变预测** - 集成多种机器学习模型和深度学习方法
-- **噪声分析** - Bootstrap和分位数回归方法生成预测区间
-- **多目标优化** - NSGA-III算法优化混凝土配合比
-- **弹性模量计算** - 基于实验数据的弹性模量预测
-- **能量分析** - 混凝土破坏过程的能量演化分析
+- **Peak Stress Prediction** - Using XGBoost, LightGBM, CatBoost, RandomForest algorithms
+- **Peak Strain Prediction** - Integrating various ML models and deep learning methods
+- **Noise Analysis** - Bootstrap and Quantile Regression methods for prediction intervals
+- **Multi-objective Optimization** - NSGA-III algorithm for concrete mix proportion optimization
+- **Elastic Modulus Calculation** - Elastic modulus prediction based on experimental data
+- **Energy Analysis** - Energy evolution analysis of concrete failure process
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 PIHRAC/
-├── 📊 dataset/                    # 数据集文件
-│   ├── dataset_final.xlsx         # 主数据集
-│   ├── dataset_with_*.xlsx        # 不同模型的数据集版本
-│   └── cluster_analysis/          # 聚类分析
-├── 🧠 LSTM/                      # 深度学习模型
+├── 📊 dataset/                    # Dataset files
+│   ├── dataset_final.xlsx         # Main dataset
+│   ├── dataset_with_*.xlsx        # Dataset versions for different models
+│   └── cluster_analysis/          # Cluster analysis
+├── 🧠 LSTM/                      # Deep learning models
 │   ├── Bidirectional_LSTM_Enhanced_cross_validation.py
 │   └── trained_model_cross_validation.py
-├── 📈 peak_stress/               # 峰值应力预测
+├── 📈 peak_stress/               # Peak stress prediction
 │   ├── XGBoost/
 │   ├── LightGBM/
 │   ├── CatBoost/
 │   └── RandomForest/
-├── 📉 peak_strain/               # 峰值应变预测
+├── 📉 peak_strain/               # Peak strain prediction
 │   ├── XGBoost/
 │   ├── LightGBM/
 │   ├── CatBoost/
 │   ├── NGBoost/
-│   └── PINN/                     # 物理信息神经网络
-├── 🔧 elastic_modulus/           # 弹性模量分析
-├── ⚡ energy_analysis/            # 能量分析
-├── 🎯 multi_objective_optimization/ # 多目标优化
-├── 📝 画图/                      # 可视化脚本（保持原名称）
-├── 💻 软件/                      # 软件工具（保持原名称）
-└── 📄 软著/                      # 软件申请材料（保持原名称）
+│   └── PINN/                     # Physics-Informed Neural Networks
+├── 🔧 elastic_modulus/           # Elastic modulus analysis
+├── ⚡ energy_analysis/            # Energy analysis
+├── 🎯 multi_objective_optimization/ # Multi-objective optimization
+├── 📝 画图/                      # Visualization scripts (original Chinese name)
+├── 💻 软件/                      # Software tools (original Chinese name)
+└── 📄 软著/                      # Software application materials (original Chinese name)
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境要求
+### Requirements
 
 ```bash
 Python >= 3.8
 ```
 
-### 安装依赖
+### Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-主要依赖包：
-- `scikit-learn` - 机器学习算法
-- `xgboost` - XGBoost模型
-- `lightgbm` - LightGBM模型
-- `catboost` - CatBoost模型
-- `tensorflow/pytorch` - 深度学习
-- `optuna` - 超参数优化
-- `shap` - 模型解释
-- `pandas, numpy` - 数据处理
-- `matplotlib, seaborn` - 数据可视化
+Main dependencies:
+- `scikit-learn` - Machine learning algorithms
+- `xgboost` - XGBoost model
+- `lightgbm` - LightGBM model
+- `catboost` - CatBoost model
+- `tensorflow/pytorch` - Deep learning
+- `optuna` - Hyperparameter optimization
+- `shap` - Model interpretation
+- `pandas, numpy` - Data processing
+- `matplotlib, seaborn` - Data visualization
 
-## 📋 使用方法
+## 📋 Usage
 
-### 1. 数据准备
+### 1. Data Preparation
 
 ```python
 import pandas as pd
 from dataset.dataloader import load_data
 
-# 加载数据集
+# Load dataset
 data = load_data('dataset/dataset_final.xlsx')
 ```
 
-### 2. 模型训练
+### 2. Model Training
 
-#### XGBoost峰值应力预测
+#### XGBoost Peak Stress Prediction
 ```bash
 cd peak_stress/XGBoost
 python XGBoost_train.py
 ```
 
-#### LSTM峰值应变预测
+#### LSTM Peak Strain Prediction
 ```bash
 cd LSTM
 python trained_model_cross_validation.py
 ```
 
-### 3. 模型分析
+### 3. Model Analysis
 
 ```bash
-# 噪声分析和预测区间
+# Noise analysis and prediction intervals
 python peak_stress/XGBoost/XGBoost_noise_analysis.py
 
-# SHAP模型解释
+# SHAP model interpretation
 python peak_strain/CatBoost/CatBoost_noise_analysis.py
 ```
 
-## 🎨 特性功能
+## 🎨 Advanced Features
 
-### 🔍 模型解释性
-- **SHAP分析** - 特征重要性可视化
-- **PDP分析** - 部分依赖图
-- **特征交互** - 2D交互效应分析
+### 🔍 Model Interpretability
+- **SHAP Analysis** - Feature importance visualization
+- **PDP Analysis** - Partial dependence plots
+- **Feature Interaction** - 2D interaction effect analysis
 
-### 📊 预测区间
-- **Bootstrap方法** - 重采样置信区间
-- **分位数回归** - 不确定性量化
-- **鲁棒性分析** - 模型稳定性评估
+### 📊 Prediction Intervals
+- **Bootstrap Method** - Resampling confidence intervals
+- **Quantile Regression** - Uncertainty quantification
+- **Robustness Analysis** - Model stability assessment
 
-### 🎯 多目标优化
+### 🎯 Multi-objective Optimization
 ```python
 from multi_objective_optimization import nsga3_optimization
 
-# 优化混凝土配合比
+# Optimize concrete mix proportions
 results = nsga3_optimization(
     objectives=['peak_stress', 'peak_strain', 'cost'],
     constraints=['w_c_ratio', 'ca_content']
 )
 ```
 
-## 📈 模型性能
+## 📈 Model Performance
 
-| 模型 | 峰值应力 R² | 峰值应变 R² | RMSE |
-|------|-------------|-------------|------|
+| Model | Peak Stress R² | Peak Strain R² | RMSE |
+|-------|---------------|---------------|------|
 | XGBoost | 0.96+ | 0.94+ | < 0.05 |
 | LightGBM | 0.95+ | 0.93+ | < 0.06 |
 | CatBoost | 0.95+ | 0.92+ | < 0.07 |
 | LSTM | - | 0.89+ | < 0.08 |
 
-## 🤝 贡献指南
+## 🔬 Technical Details
 
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
+### Input Features
+- **Material Parameters**: 15 material properties
+- **Compressive Strength** (fc)
+- **Peak Strain** (Xiao_strain)
+- **Total Features**: 17 dimensions
 
-## 📄 许可证
+### Model Architecture
+- **Ensemble Methods**: XGBoost, LightGBM, CatBoost, RandomForest
+- **Deep Learning**: Bidirectional LSTM with attention mechanism
+- **Physics-Informed**: PINN incorporating constitutive equations
+- **Optimization**: NSGA-III for multi-objective problems
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+### Evaluation Metrics
+- **R² Score**: Coefficient of determination
+- **RMSE**: Root mean square error
+- **MAE**: Mean absolute error
+- **Prediction Intervals**: 95% confidence bands
 
-## 📧 联系方式
+## 🤝 Contributing
 
-- **作者**: Marvin Li Junzan
-- **邮箱**: [your-email@example.com]
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## 📧 Contact
+
+- **Author**: Junzan Li
+- **Email**: [1283014568@qq.com]
 - **GitHub**: [Marvin-LiJunZan](https://github.com/Marvin-LiJunZan)
 
-## 🙏 致谢
+## 🙏 Acknowledgments
 
-感谢所有为再生混凝土研究做出贡献的研究者和开源社区的支持。
+Thanks to all researchers who have contributed to recycled concrete research and the open-source community for their support.
 
-## 📚 参考文献
+## 📚 References
 
-1. 相关的混凝土力学研究论文
-2. 机器学习在土木工程中的应用
-3. 再生骨料混凝土本构关系研究
+1. Related concrete mechanics research papers
+2. Machine learning applications in civil engineering
+3. Constitutive relationship research for recycled aggregate concrete
 
 ---
 
-**注意**: 本项目仅供学术研究使用，商业应用请遵循相关许可协议。
+**Note**: This project is for academic research purposes only. For commercial applications, please follow relevant licensing agreements.
+
+## 🔗 Related Projects
+
+- [Concrete Material Properties Database](https://github.com/your-repo/concrete-db)
+- [ML in Civil Engineering](https://github.com/your-repo/ml-civil)
+- [Recycled Aggregate Research](https://github.com/your-repo/rac-research)
